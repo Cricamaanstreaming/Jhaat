@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cric Hype</title>
+  <link rel="stylesheet" href="https://cxh.pages.dev/style.css">
+</head>
+<body>
+<style>
+  #player {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+  }
+</style>
+
+<div id="player"></div>
+<script src='https://content.jwplatform.com/libraries/KB5zFt7A.js'></script>
+<script>
+  // Function to get query parameter
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Get the video URL from the query parameter
+  const videoUrl = getQueryParam('videourl');
+
+  // Check if the video URL is valid
+  if (!videoUrl) {
+    console.error('No video URL provided in the query parameters.');
+  } else {
+    const playerInstance = jwplayer("player").setup({
+      controls: true,
+      displaytitle: true,
+      autoplay: true,
+      displaydescription: true,
+      abouttext: "Video Player By CricHype",
+      aboutlink: "https://telegram.me/CricHype",
+      skin: {
+        name: "netflix"
+      },
+      logo: {
+        file: "https://cxh.pages.dev/CXH.png",
+        link: "https://telegram.me/CricHype"
+      },
+      captions: {
+        color: "#FFF",
+        fontSize: 14,
+        backgroundOpacity: 0,
+        edgeStyle: "raised"
+      },
+      playlist: [
+        {
+          image: "",
+          sources: [
+            {
+              file: videoUrl, // Use the video URL from the query parameter
+              type: "dash",
+              label: "1080p",
+              default: true,
+              drm: { "clearkey": { "keyId":"00053ac1e9b1231eed3eb4e3540b3ae1","key":"0f03d8541826af3d9acbac975d751165" } }
+            }
+          ]
+        }
+      ],
+      advertising: {
+        client: "vast",
+        schedule: [
+          {
+            offset: "pre",
+            tag: ""
+          }
+        ]
+      }
+    });
+
+    playerInstance.on("ready", function () {
+      // Your button setup code remains unchanged
+    });
+  }
+</script>
+</body>
+</html>
